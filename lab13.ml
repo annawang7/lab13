@@ -106,7 +106,7 @@ let prods_opt lst1 lst2 =
     match lst1, lst2 with
     | [], [] -> Some acc
     | [], _ | _, [] -> None
-    | h1::t1, h2::t2 -> prods' t1 t2 ((h1 * h2)::acc) in
+    | h1::t1, h2::t2 -> prods_opt' t1 t2 ((h1 * h2)::acc) in
   prods_opt lst1 lst2 [] ;;
 
 (*....................................................................
