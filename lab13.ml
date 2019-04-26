@@ -116,7 +116,7 @@ of corresponding elements of the lists). (For reference, you
 implemented dot product in lab 2.)
 ....................................................................*)
 
-let dotprod = sum prods ;;
+let dotprod lst1 lst2 = sum (prods lst1 lst2) ;;
 
 (*====================================================================
 Part 2: Loops
