@@ -63,8 +63,12 @@ might want to add a "rec", or use a different argument list, or no
 argument list at all but binding to an anonymous function instead.)
 ....................................................................*)
 
-let sum _ =
-  failwith "sum not implemented" ;;
+let sum lst =
+  let rec sum' lst acc = 
+    match lst with
+    | [] -> acc
+    | hd :: tl -> sum' tl (hd + acc) in
+  sum' lst 0 ;;
 
 (*....................................................................
 Exercise 2: Write a tail-recursive function that finds the product of
@@ -84,16 +88,24 @@ ordering of the lists.
    # prods [1; 2; 3] [1; 2; 3] ;;
    -: int list = [1; 4; 9] *)
 
-let prods _ =
-  failwith "prods not implemented" ;;
+let prods lst1 lst2 =
+  let rec prods' lst1 lst2 acc =
+    match lst1, lst2 with
+    | [], [] -> acc
+    | [], _ | _, [] -> failwith "blah"
+    | h1::t1, h2::t2 -> prods' t1 t2 ((h1 * h2)::acc) ;;
 
 (*....................................................................
 Exercise 3: Modify your prods function to use option types to deal
 with lists of different lengths.
 ....................................................................*)
 
-let prods_opt _ =
-  failwith "prods not implemented" ;;
+let prods_opt lst1 lst2 =
+  let rec prods_opt' lst1 lst2 acc = 
+    match lst1, st2 with
+    | [], [] -> Some acc
+    | [], _ | _, [] -> None
+    | h1::t1, h2::t2 -> prods' t1 t2 ((h1 * h2)::acc) ;;
 
 (*....................................................................
 Exercise 4: Finally, combine your sum and prods functions to create a
@@ -102,8 +114,7 @@ of corresponding elements of the lists). (For reference, you
 implemented dot product in lab 2.)
 ....................................................................*)
 
-let dotprod _ =
-  failwith "dotprod not implemented" ;;
+let dotprod = sum prods ;;
 
 (*====================================================================
 Part 2: Loops
@@ -129,10 +140,20 @@ For example, we expect the following behavior:
 ....................................................................*)
 
 let odd_while (x : int) : int list =
-  failwith "oddwhile not implemented" ;;
+  let i = ref 1 in
+  let lst = ref [] in
+  while i <= x do
+    lst := i :: !lst;
+    i := !i + 2;
+  done;
+  List.rev lst ;;
 
 let odd_for (x : int) : int list =
-  failwith "oddfor not implemented" ;;
+  let lst = ref [] in
+  for i = 1 to (x + 1) / 2 do
+    lst := i * 2 - 1 :: !lst; 
+  done;
+  List.rev lst ;;
 
 (* Here is the length function implemented using a while loop, as in
 the reading:
@@ -156,7 +177,13 @@ while loop.
 ....................................................................*)
 
 let sum_iter (lst : int list) : int =
-  failwith "sum_iter not implemented" ;;
+  let counter = ref 0 in
+  let lstr = ref lst in
+  while !lstr <> [] do
+    counter := !counter + List.hd !lstr;
+    lstr := List.tl !lstr
+  done;
+  !counter ;;
 
 (*....................................................................
 Exercise 7: Rewrite the recursive prods function from above using a
@@ -165,7 +192,16 @@ have different lengths.
 ....................................................................*)
 
 let prods_iter (xs : int list) (ys : int list) : int list =
-  failwith "prods_iter not implemented" ;;
+  let lstx = ref xs in
+  let lsty = ref ys in
+  let prod = ref [] in
+  while !lstx <> [] && !lsty <> [] do
+    prod := ((List.hd !lstx) * (List.hd !lsty)) :: !prod;
+    lstx := List.tl !lstx;
+    lsty := List.tl !lsty;
+  done;
+  if !lstx <> [] || !lsty <> [] then failwith "lists unequal"
+  else List.rev !prod ;;
 
 (* You've now implemented prods a few times, so think about which of
 them you think is the most efficient, and which of them required the
@@ -188,7 +224,13 @@ List.rev, and you've likely used it in previous exercises.)
 ....................................................................*)
 
 let reverse (lst : 'a list) : 'a list =
-  failwith "reverse not implemented" ;;
+  let lstr = ref lst in
+  let lrev = ref []
+  while !lstr <> [] do
+    lrev := List.hd !lstr :: !lrev;
+    lstr := List.tl !lstr
+  done;
+  !lrev ;;
 
 (* As you've observed in this lab, procedural programming can be
 useful, but most problems can and should be solved with functional
