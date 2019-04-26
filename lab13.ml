@@ -93,7 +93,8 @@ let prods lst1 lst2 =
     match lst1, lst2 with
     | [], [] -> acc
     | [], _ | _, [] -> failwith "blah"
-    | h1::t1, h2::t2 -> prods' t1 t2 ((h1 * h2)::acc) ;;
+    | h1::t1, h2::t2 -> prods' t1 t2 ((h1 * h2)::acc) in
+  prods' lst1 lst2 [] ;;
 
 (*....................................................................
 Exercise 3: Modify your prods function to use option types to deal
@@ -105,7 +106,8 @@ let prods_opt lst1 lst2 =
     match lst1, st2 with
     | [], [] -> Some acc
     | [], _ | _, [] -> None
-    | h1::t1, h2::t2 -> prods' t1 t2 ((h1 * h2)::acc) ;;
+    | h1::t1, h2::t2 -> prods' t1 t2 ((h1 * h2)::acc) in
+  prods_opt lst1 lst2 [] ;;
 
 (*....................................................................
 Exercise 4: Finally, combine your sum and prods functions to create a
