@@ -144,8 +144,8 @@ For example, we expect the following behavior:
 let odd_while (x : int) : int list =
   let i = ref 1 in
   let lst = ref [] in
-  while i <= x do
-    lst := i :: !lst;
+  while !i <= x do
+    lst := !i :: !lst;
     i := !i + 2;
   done;
   List.rev lst ;;
