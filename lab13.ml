@@ -148,14 +148,14 @@ let odd_while (x : int) : int list =
     lst := !i :: !lst;
     i := !i + 2;
   done;
-  List.rev lst ;;
+  List.rev !lst ;;
 
 let odd_for (x : int) : int list =
   let lst = ref [] in
   for i = 1 to (x + 1) / 2 do
     lst := i * 2 - 1 :: !lst; 
   done;
-  List.rev lst ;;
+  List.rev !lst ;;
 
 (* Here is the length function implemented using a while loop, as in
 the reading:
