@@ -103,7 +103,7 @@ with lists of different lengths.
 
 let prods_opt lst1 lst2 =
   let rec prods_opt' lst1 lst2 acc = 
-    match lst1, st2 with
+    match lst1, lst2 with
     | [], [] -> Some acc
     | [], _ | _, [] -> None
     | h1::t1, h2::t2 -> prods' t1 t2 ((h1 * h2)::acc) in
